@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>StringMetrics.js Unit Tests</title>
+		<script src="http://code.jquery.com/jquery-latest.js"></script>
+		<link rel="stylesheet" href="http://code.jquery.com/qunit/git/qunit.css" type="text/css" media="screen" />
+		<script type="text/javascript" src="http://code.jquery.com/qunit/git/qunit.js"></script>
+		<script type="text/javascript" src="../lib/StringMetrics.js"></script>
+		<script>
+			$(document).ready(function() {
+
+				module("StringMetrics");
+
+				var stringMetrics = new StringMetrics();
+
+				test("Levenshtein distance: compute same length", function() {
+					var from = "lenght";
+					var to = "length";
+					var expected = 2;
+					var actual = stringMetrics.levenshteinDistance(from, to);
+					equal(actual, expected, "Levenshtein distance between " + from + " & " + to + " is " + expected);
+				});
+
+				test("Levenshtein distance: compute different length", function() {
+					var from = "kitten";
+					var to = "sitting";
+					var expected = 3;
+					var actual = stringMetrics.levenshteinDistance(from, to);
+					equal(actual, expected, "Levenshtein distance between " + from + " & " + to + " is " + expected);
+				});
+
+				test("Damerau-Levenshtein distance: compute same length", function() {
+					var from = "lenght";
+					var to = "length";
+					var expected = 1;
+					var actual = stringMetrics.damerauLevenshteinDistance(from, to);
+					equal(actual, expected, "Damerau-Levenshtein distance between " + from + " & " + to + " is " + expected);
+				});
+
+				test("Damerau-Levenshtein distance: compute different length", function() {
+					var from = "kitten";
+					var to = "sitting";
+					var expected = 3;
+					var actual = stringMetrics.damerauLevenshteinDistance(from, to)
+					equal(actual, expected, "Damerau-Levenshtein distance between " + from + " & " + to + " is " + expected);
+				});
+
+			});
+
+		</script>
+	</head>
+	<body>
+		<h1 id="qunit-header">StringMetrics.js Unit Tests</h1>
+		<h2 id="qunit-banner">&nbsp;</h2>
+		<div id="qunit-testrunner-toolbar">
+			&nbsp;
+		</div>
+		<h2 id="qunit-userAgent">&nbsp;</h2>
+		<ol id="qunit-tests">
+			&nbsp;
+		</ol>
+	</body>
+</html>
