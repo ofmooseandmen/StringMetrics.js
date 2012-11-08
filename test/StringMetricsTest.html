@@ -18,7 +18,7 @@
 					var from = "lenght";
 					var to = "length";
 					var expected = 2;
-					var actual = stringMetrics.levenshteinDistance(from, to);
+					var actual = stringMetrics.levenshtein().compute(from, to);
 					equal(actual, expected, "Levenshtein distance between " + from + " & " + to + " is " + expected);
 				});
 
@@ -26,7 +26,7 @@
 					var from = "kitten";
 					var to = "sitting";
 					var expected = 3;
-					var actual = stringMetrics.levenshteinDistance(from, to);
+					var actual = stringMetrics.levenshtein().compute(from, to);
 					equal(actual, expected, "Levenshtein distance between " + from + " & " + to + " is " + expected);
 				});
 
@@ -34,7 +34,7 @@
 					var from = "lenght";
 					var to = "length";
 					var expected = 1;
-					var actual = stringMetrics.damerauLevenshteinDistance(from, to);
+					var actual = stringMetrics.damerauLevenshtein().compute(from, to);
 					equal(actual, expected, "Damerau-Levenshtein distance between " + from + " & " + to + " is " + expected);
 				});
 
@@ -42,7 +42,7 @@
 					var from = "kitten";
 					var to = "sitting";
 					var expected = 3;
-					var actual = stringMetrics.damerauLevenshteinDistance(from, to)
+					var actual = stringMetrics.damerauLevenshtein().compute(from, to)
 					equal(actual, expected, "Damerau-Levenshtein distance between " + from + " & " + to + " is " + expected);
 				});
 
@@ -50,7 +50,7 @@
 					var from = "lenght";
 					var to = "length";
 					var expected = 0.6;
-					var actual = stringMetrics.diceCoefficient(from, to);
+					var actual = stringMetrics.dice().compute(from, to);
 					equal(actual, expected, "Dice's Coefficient between " + from + " & " + to + " is " + expected);
 				});
 
@@ -58,7 +58,7 @@
 					var from = "kitten";
 					var to = "sitting";
 					var expected = 0.36363636363636365;
-					var actual = stringMetrics.diceCoefficient(from, to)
+					var actual = stringMetrics.dice().compute(from, to)
 					equal(actual, expected, "Dice's Coefficient between " + from + " & " + to + " is " + expected);
 				});
 
@@ -66,7 +66,7 @@
 					var elems = ["tourcoing", "toulouse", "toulon"];
 					var elem = "tlouse";
 					var expecteds = ["toulouse", "toulon", "tourcoing"];
-					var actuals = stringMetrics.sort(elems, elem)
+					var actuals = stringMetrics.levenshtein().sort(elems, elem)
 					equal(actuals.length, 3, "All elements are kept");
 					equal(actuals[0], expecteds[0], "agrep " + elem + " vs. " + elems + " first is " + expecteds[0]);
 					equal(actuals[1], expecteds[1], "agrep " + elem + " vs. " + elems + " second is " + expecteds[1]);
@@ -78,35 +78,10 @@
 					var elem = "tlouse";
 					var expecteds = ["toulouse", "toulon", "tourcoing"];
 					var threshold = 0.6;
-					var actuals = stringMetrics.sort(elems, elem, {
-						metric : stringMetrics.dice,
-						threshold : threshold
-					})
+					var actuals = stringMetrics.dice().sort(elems, elem, threshold)
 					equal(actuals.length, 1, "Only one element of " + elems + " has a Dice coefficient above " + threshold);
 					equal(actuals[0], expecteds[0], "agrep " + elem + " vs. " + elems + " first is " + expecteds[0]);
 				});
-
-				test("sorter: default distance and threshold used", function() {
-					var elems = ["tourcoing", "toulouse", "toulon"];
-					var elem = "tlouse";
-					var expecteds = ["toulouse", "toulon", "tourcoing"];
-					var actuals = stringMetrics.sorter().sort(elems, elem)
-					equal(actuals.length, 3, "All elements are kept");
-					equal(actuals[0], expecteds[0], "agrep " + elem + " vs. " + elems + " first is " + expecteds[0]);
-					equal(actuals[1], expecteds[1], "agrep " + elem + " vs. " + elems + " second is " + expecteds[1]);
-					equal(actuals[2], expecteds[2], "agrep " + elem + " vs. " + elems + " third is " + expecteds[2]);
-				});
-
-				test("sorter: dice coefficient and threshold = 0.6", function() {
-					var elems = ["tourcoing", "toulouse", "toulon"];
-					var elem = "tlouse";
-					var expecteds = ["toulouse", "toulon", "tourcoing"];
-					var threshold = 0.6;
-					var actuals = stringMetrics.sorter().metric(stringMetrics.dice).threshold(threshold).sort(elems, elem)
-					equal(actuals.length, 1, "Only one element of " + elems + " has a Dice coefficient above " + threshold);
-					equal(actuals[0], expecteds[0], "agrep " + elem + " vs. " + elems + " first is " + expecteds[0]);
-				});
-
 			});
 
 		</script>
